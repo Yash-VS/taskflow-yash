@@ -5,6 +5,7 @@
 -- ============================================================
 
 --changeset taskflow:001-create-users
+--validCheckSum: 9:1af19953fa2648755e1ef5b320a89d1c
 
 CREATE TABLE users
 (

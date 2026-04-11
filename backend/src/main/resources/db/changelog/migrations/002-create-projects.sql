@@ -5,6 +5,7 @@
 -- ============================================================
 
 --changeset taskflow:002-create-projects
+--validCheckSum: 9:35046aecc45968a4b60a652c3f3ef697
 
 CREATE TABLE projects
 (

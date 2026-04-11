@@ -7,6 +7,7 @@
 -- required by the delete permission rule: "project owner OR task creator".
 
 --changeset taskflow:003-create-tasks
+--validCheckSum: 9:8fb5dbfdddd6157762aa53ecaf269672
 
 CREATE TABLE tasks
 (
