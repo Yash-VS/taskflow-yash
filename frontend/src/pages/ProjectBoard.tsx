@@ -5,7 +5,7 @@ import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea
 import { projectService } from '../services/project';
 import { taskService } from '../services/task';
 import { userService } from '../services/user';
-import { Task, TaskStatus, TaskPriority, UserInfo } from '../types';
+import { Task, TaskStatus, TaskPriority } from '../types';
 import { Navbar } from '../components/Navbar';
 import { ArrowLeft, Plus, Search, User as UserIcon, Calendar, Hash } from 'lucide-react';
 import './ProjectBoard.css';
@@ -102,7 +102,7 @@ export const ProjectBoard: React.FC = () => {
 
       return { previousProject };
     },
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       if (context?.previousProject) {
         queryClient.setQueryData(['project', id], context.previousProject);
       }

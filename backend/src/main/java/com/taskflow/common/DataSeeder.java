@@ -39,14 +39,14 @@ public class DataSeeder implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         if (userRepository.count() > 0) {
             log.info("Old data present — wiping for fresh Zomato seed...");
-            taskRepository.deleteAll();
-            projectRepository.deleteAll();
-            userRepository.deleteAll();
+            taskRepository.deleteAllInBatch();
+            projectRepository.deleteAllInBatch();
+            userRepository.deleteAllInBatch();
         }
 
         log.info("Seeding Zomato test data...");
 
-        User owner = seedUser("Deepinder Goyal", "deepinder@zomato.com");
+        User owner = seedUser("Test User", "test@example.com");
         
         List<User> users = new ArrayList<>();
         users.add(seedUser("Akriti Chopra", "akriti@zomato.com"));
@@ -93,7 +93,7 @@ public class DataSeeder implements ApplicationRunner {
             "Deploy AI demand forecasting model"
         });
 
-        log.info("Zomato seed complete. Login with owner: deepinder@zomato.com / password123");
+        log.info("Zomato seed complete. Login with owner: test@example.com / password123");
     }
 
     private User seedUser(String name, String email) {

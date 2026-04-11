@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { User, AuthResponse } from '../types';
 
 interface AuthContextType {
@@ -23,7 +23,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     return null;
   });
-  
+
   const [token, setToken] = useState<string | null>(() => sessionStorage.getItem('token'));
 
   const login = (authData: AuthResponse) => {

@@ -41,4 +41,5 @@ export interface Project {
   ownerId: string;
   createdAt: string;
   tasks?: Task[]; // Populated when getting details
+  ownerName?: string;
 }

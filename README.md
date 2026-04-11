@@ -9,59 +9,79 @@ TaskFlow allows users to register, log in, create projects, and manage tasks. It
 - **Backend**: Java 21, Spring Boot 3.3, Spring Security, JWT.
 - **Database**: PostgreSQL 16.
 - **Migration**: Liquibase.
-- **Infrastucture**: Docker & Docker Compose.
+- **Infrastructure**: Docker & Docker Compose.
 
-## 2. Architecture Decisions
+---
 
-### **Backend: Spring Boot + Java 21**
-- **Decision**: Used Spring Boot instead of Go (referenced in requirements) to leverage the mature ecosystem of Spring Security and JPA.
-- **Pattern**: Followed **Layered Architecture** (Controller -> Service -> Repository) to ensure Separation of Concerns (SoC).
-- **Security**: Implemented stateless **JWT authentication**. Passwords are hashed using **BCrypt with a cost of 12**, exceeding the minimum requirement.
-- **Validation**: Centralized error handling using `@RestControllerAdvice` to provide structured 400/401/403/404 responses.
+## 2. Setup & Running Locally
 
-### **Frontend: React + Vanilla CSS**
-- **Decision**: Built a custom design system using **Vanilla CSS Variables** instead of a component library. This allowed for 100% control over the "Zomato-style" aesthetics (vibrant reds, soft shadows, glassmorphism).
-- **State Management**: Used **React Query (TanStack Query)** for server-state management, providing out-of-the-box caching and optimistic UI updates.
-- **Responsiveness**: Fully responsive layout using CSS Grid and Flexbox, optimized for both mobile (375px) and desktop (1280px).
+### **Case 1: Using Docker (Recommended)**
+This is the fastest way to get the full stack running with zero local installations dependencies (besides Docker).
 
-### **Database: Liquibase Migrations**
-- **Decision**: Used Liquibase for schema management. This ensures every developer (and the Docker container) starts with exactly the same database schema without manual SQL imports.
+**Prerequisites**: [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
 
-## 3. Running Locally
-The entire stack is containerized for a zero-install experience.
+1. **Start the Stack**:
+   ```powershell
+   docker compose up --build
+   ```
+2. **Access the Application**:
+   - **Frontend UI**: [http://localhost:3000](http://localhost:3000)
+   - **Swagger API Docs**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+3. **Database Info**:
+   - **Host**: `localhost`
+   - **Port**: `5432`
+   - **User/DB/Pass**: `taskflow` / `taskflow` / `taskflow123`
 
-**Prerequisites**: Docker Desktop installed.
+---
 
+### **Case 2: Manual Setup (No Docker)**
+Use this if you prefer running services directly on your host machine.
+
+#### **Pre-requisites**
+- **Java**: JDK 21+
+- **Database**: PostgreSQL 16+ (Running locally on port `5432`)
+- **Build Tool**: Maven 3.9+
+- **Node.js**: v20+ & npm
+
+#### **Step 1: Database Setup**
+1. Create a database named `taskflow`.
+2. Ensure a user `taskflow` with password `taskflow123` has permissions.
+3. Migrations will run automatically when the backend starts.
+
+#### **Step 2: Start Backend**
 ```powershell
-# 1. Clone the repository
-git clone https://github.com/yashv/taskflow.git
-cd taskflow
-
-# 2. Setup environment (optional - defaults are provided)
-cp .env.example .env
-
-# 3. Start the full stack
-docker compose up --build
+cd backend
+mvn clean spring-boot:run
 ```
+*API will be available at http://localhost:8080*
 
-- **Frontend**: [http://localhost:3000](http://localhost:3000)
-- **API Server**: [http://localhost:8080](http://localhost:8080)
-- **Swagger Docs**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+#### **Step 3: Start Frontend**
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+*UI will be available at http://localhost:5173 (Vite default dev port)*
 
-## 4. Running Migrations
-Migrations run **automatically** on container startup. No manual steps are required. 
-If you need to run them manually for local development without Docker:
-`mvn liquibase:update` (Requires local Postgres on port 5433).
+---
 
-## 5. Test Credentials
-The database is pre-seeded with Zomato-themed test data. You can log in immediately:
+## 3. Test Credentials
+The database is pre-seeded with test data. You can log in immediately:
 
-- **Email**: `deepinder@zomato.com`
+- **Email**: `test@example.com`
 - **Password**: `password123`
 
 *(Other users like `akriti@zomato.com` and `albinder@blinkit.com` are also available with the same password).*
 
-## 6. API Reference
+---
+
+## 4. Architecture Decisions
+- **Backend: Spring Boot + Java 21**: Leveraging mature ecosystem of Spring Security and JPA.
+- **Frontend: React + Vanilla CSS**: Built a custom design system using CSS Variables for 100% control over aesthetics (vibrant reds, soft shadows).
+- **State Management**: React Query for server-state, providing caching and optimistic UI updates.
+- **Database**: Liquibase for schema management to ensure consistency across environments.
+
+## 5. API Reference
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `POST` | `/auth/register` | Create a new account |
@@ -72,9 +92,8 @@ The database is pre-seeded with Zomato-themed test data. You can log in immediat
 | `PATCH` | `/tasks/{id}` | Update task status/assignee/etc. |
 | `DELETE` | `/tasks/{id}` | Remove a task |
 
-## 7. What I'd Do With More Time
-1. **Real-time Updates**: Implement WebSockets or SSE to notify users when a task they are assigned to is updated.
-2. **Pagination**: Add proper paging to the `/projects` and `/tasks` endpoints for better performance with large datasets.
-3. **Enhanced Testing**: Increase test coverage to 80%+, including E2E tests using Playwright.
-4. **Drag and Drop**: Although some logic is present, I'd fully polish the Kanban board drag-and-drop experience.
-5. **Caching**: Implement Redis for JWT blacklisting or high-frequency query caching.
+## 6. What I'd Do With More Time
+1. **Real-time Updates**: Implement WebSockets or SSE for task updates.
+2. **Pagination**: Add proper paging to list endpoints.
+3. **Enhanced Testing**: Increase test coverage with unit and E2E tests.
+4. **Drag and Drop**: Fully polish the Kanban board experience.
