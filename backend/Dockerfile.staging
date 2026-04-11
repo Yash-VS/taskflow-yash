@@ -1,0 +1,27 @@
+# ── STAGE 1: Build & Run Tests ───────────────────────────────────────────────
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS builder
+WORKDIR /app
+
+# Cache dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy source code
+COPY src ./src
+
+# This runs unit tests (surefire) and integration tests (failsafe) 
+# and builds the final jar only if all tests pass.
+# If any test fails, the docker build immediately halts.
+RUN mvn clean verify -B
+
+# ── STAGE 2: Package Release Image ───────────────────────────────────────────
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+
+# Copy the verified jar from the builder stage
+COPY --from=builder /app/target/*.jar app.jar
+
+EXPOSE 8080
+
+# Run exactly like production
+ENTRYPOINT ["java", "-jar", "app.jar"]

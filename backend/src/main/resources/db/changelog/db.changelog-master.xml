@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
+
+    <!--
+        Master changelog — index of all migrations in execution order.
+        Each migration is a plain SQL file with Liquibase comment headers.
+        Add new migrations by appending <include> entries below.
+    -->
+
+    <include file="db/changelog/migrations/001-create-users.sql"/>
+    <include file="db/changelog/migrations/002-create-projects.sql"/>
+    <include file="db/changelog/migrations/003-create-tasks.sql"/>
+    <include file="db/changelog/migrations/004-add-story-points-to-tasks.sql"/>
+    <include file="db/changelog/migrations/005-make-task-fields-mandatory.sql"/>
+
+</databaseChangeLog>
