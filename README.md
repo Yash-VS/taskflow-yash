@@ -96,4 +96,3 @@ The database is pre-seeded with test data. You can log in immediately:
 1. **Real-time Updates**: Implement WebSockets or SSE for task updates.
 2. **Pagination**: Add proper paging to list endpoints.
 3. **Enhanced Testing**: Increase test coverage with unit and E2E tests.
-4. **Drag and Drop**: Fully polish the Kanban board experience.
