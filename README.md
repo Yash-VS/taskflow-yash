@@ -1,12 +1,14 @@
 # TaskFlow — Engineering Take-Home Assignment
 
 TaskFlow is a minimal but powerful task management system designed to streamline project tracking and collaboration. Built with a focus on polished UI, robust security, and scalable architecture.
+
 Bonus Points
-## 1. I have added integration tests using in-memory h2 DB.
-## 2. Drag and Drop kanban board for tickets.
-## 3. Session storage for token for better UI/UX.
-## 4. Swagger has been integrated as well.
-## 5. 
+1. I have added integration tests using in-memory h2 DB.
+2. Drag and Drop kanban board for tickets.
+3. Session storage for token for better UI/UX.
+4. Swagger has been integrated as well.
+5. Dark mode has been added.
+6. task counts by status and by assignee
 
 ## 1. Overview
 TaskFlow allows users to register, log in, create projects, and manage tasks. It features a modern, responsive interface inspired by Zomato's design language.
